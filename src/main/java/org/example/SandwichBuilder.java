@@ -12,44 +12,43 @@ public class SandwichBuilder {
     }
 
     public Sandwich build() {
+
+        System.out.println("Please choose your size: 1 - 4inch,2 - 8inch,3 - 12inch");
+        int size = scanner.nextInt();
+        scanner.nextLine();
+        SandwichSize sandwichSize = SandwichSize.sandwichSizeFromCode(size);
+
+
         System.out.println("Please choose your bread :");
         showBreadMenu();
         System.out.print("Enter your choice: ");
         int breadChoice = scanner.nextInt();
         scanner.nextLine();
-
-
-        showSizeMenu();
-        int size = scanner.nextInt();
-        scanner.nextLine();
+        BreadType breadType = BreadType.breadTypeFromCode(breadChoice);
 
         // toppings
         showToppingsMenu();
-        int topping = scanner.nextInt();
+        int toppingMeat = scanner.nextInt();
         scanner.nextLine();
+        MeatType meatType = MeatType.meatTypeFromCode(toppingMeat);
 
         //extra meat
         System.out.println("Would you like extra meat? Yes/No");
         showExtraMeat();
         String answer = scanner.nextLine();
-        boolean isNeedextraMeat = true;
-        if (answer.equalsIgnoreCase("No")) {
-            isNeedextraMeat = false;
-        }
+        boolean isNeedextraMeat = !answer.equalsIgnoreCase("No");
 
         //cheese
         showCheeseMenu();
         int cheese = scanner.nextInt();
         scanner.nextLine();
+        CheeseType cheeseType = CheeseType.cheeseTypeFromCode(cheese);
 
         //extra cheese
         System.out.println("Would you like extra cheese? Yes/No");
         showExtraCheese();
         String answer1 = scanner.nextLine();
-        boolean isNeedExtraCheese = true;
-        if (answer1.equalsIgnoreCase("No")) {
-            isNeedExtraCheese = false;
-        }
+        boolean isNeedExtraCheese = !answer1.equalsIgnoreCase("No");
 
         //regular topping
         showRegularTopping();
@@ -64,8 +63,10 @@ public class SandwichBuilder {
                 regularToppings.add(choice);
             }
         }
+        ArrayList<ToppingType> toppings = new ArrayList<>();
         for (Integer item : regularToppings) {
-            System.out.printf("%s, ", item);
+            ToppingType toppingType = ToppingType.toppingTypeFromCode(item);
+            toppings.add(toppingType);
         }
 
         //sauces
@@ -81,8 +82,11 @@ public class SandwichBuilder {
                 regularSauces.add(choice);
             }
         }
+        ArrayList<SauceType> sauceTypes = new ArrayList<>();
         for (Integer item : regularSauces) {
-            System.out.printf("%s, ", item);
+            SauceType sauceType = SauceType.sauceTypeFromCode(item);
+            sauceTypes.add(sauceType);
+
 
         }
         //sides
@@ -102,34 +106,20 @@ public class SandwichBuilder {
             System.out.printf("%s, ", item);
         }
 
-
-
-
-        return new Sandwich();
+     
+        return new Sandwich(sandwichSize,breadType,meatType,isNeedextraMeat,cheeseType,isNeedExtraCheese,toppings,sauceTypes);
     }
+
+
+
 
     private void showBreadMenu() {
         System.out.println("\nChoose your bread type:");
         System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-10s\n", "#", "Bread Type", "Price");
+        System.out.printf(" %-2s  %-10s  %-10s %-10s %-10s\n", "#", "Bread Type", "4\"","8\"","12\"");
         System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-10s\n", "1.", "White", "$0.00");
-        System.out.printf("%-3s %-15s %-10s\n", "2.", "Wheat", "$0.00");
-        System.out.printf("%-3s %-15s %-10s\n", "3.", "Rye", "$0.00");
-        System.out.printf("%-3s %-15s %-10s\n", "4.", "Wrap", "$0.00");
+        BreadType.display();
         System.out.println("------------------------------------");
-    }
-
-    private void showSizeMenu() {
-        System.out.println("\nChoose your sandwich size:");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-10s %-10s\n", "#", "Size", "Price");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-10s %-10s\n", "1.", "4\"", "$5.50");
-        System.out.printf("%-3s %-10s %-10s\n", "2.", "8\"", "$7.00");
-        System.out.printf("%-3s %-10s %-10s\n", "3.", "12\"", "$8.50");
-        System.out.println("------------------------------------");
-
     }
 
     private void showToppingsMenu() {
@@ -137,11 +127,7 @@ public class SandwichBuilder {
         System.out.println("------------------------------------");
         System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#", "Topping", "4\"", "8\"", "12\"");
         System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "1.", "Steak", "$1.00", "$2.00", "$3.00");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "2.", "Ham", "$0.75", "$1.50", "$2.25");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "4.", "Roast Beef", "$1.20", "$2.40", "$3.60");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "5.", "Chicken", "$1.00", "$2.00", "$3.00");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "6.", "Bacon", "$0.90", "$1.80", "$2.70");
+        MeatType.display();
         System.out.println("------------------------------------");
     }
 
@@ -159,10 +145,7 @@ public class SandwichBuilder {
         System.out.println("------------------------------------");
         System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#", "Cheese", "4\"", "8\"", "12\"");
         System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "1.", "American", "$0.75", "$1.50", "$2.25");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "2.", "Provolone", "$0.75", "$1.50", "$2.25");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "3.", "Cheddar", "$0.75", "$1.50", "$2.25");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "4.", "Swiss", "$0.75", "$1.50", "$2.25");
+        CheeseType.display();
         System.out.println("------------------------------------");
     }
 
@@ -180,16 +163,8 @@ public class SandwichBuilder {
         System.out.println("------------------------------------");
         System.out.printf("%-3s %-15s\n", "#", "Topping");
         System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s\n", "1.", "Lettuce");
-        System.out.printf("%-3s %-15s\n", "2.", "Peppers");
-        System.out.printf("%-3s %-15s\n", "3.", "Onions");
-        System.out.printf("%-3s %-15s\n", "4.", "Tomatoes");
-        System.out.printf("%-3s %-15s\n", "5.", "Jalapeños");
-        System.out.printf("%-3s %-15s\n", "6.", "Cucumbers");
-        System.out.printf("%-3s %-15s\n", "7.", "Pickles");
-        System.out.printf("%-3s %-15s\n", "8.", "Guacamole");
-        System.out.printf("%-3s %-15s\n", "9.", "Mushrooms");
-        System.out.printf("%-3s %-15s\n", "0.", "Finish with regular toppings");
+        ToppingType.display();
+        System.out.printf("%-3s \n",  " 0.Finish with regular toppings");
         System.out.println("------------------------------------");
     }
 
@@ -198,13 +173,8 @@ public class SandwichBuilder {
         System.out.println("------------------------------------");
         System.out.printf("%-3s %-15s\n", "#", "Sauces");
         System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s\n", "1.", "Mayo");
-        System.out.printf("%-3s %-15s\n", "2.", "Mustard");
-        System.out.printf("%-3s %-15s\n", "3.", "Ketchup");
-        System.out.printf("%-3s %-15s\n", "4.", "Ranch");
-        System.out.printf("%-3s %-15s\n", "5.", "Thousand islands");
-        System.out.printf("%-3s %-15s\n", "6.", "Vinaigrette");
-        System.out.printf("%-3s %-15s\n", "0.", "Finish with regular sauces");
+        SauceType.display();
+        System.out.printf("%-3s %-15s\n", "0", "Finish with regular sauces");
         System.out.println("------------------------------------");
     }
 

@@ -1,8 +1,7 @@
 package org.example;
 
-import java.time.LocalDate;
 
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -91,8 +90,9 @@ public class UserInterface {
                      addChips(scanner);
                     break;
                 case "4":
-                    //  checkoutOrder(scanner);
-                    inOrder = false;
+                     checkedOut(scanner);
+                     inOrder = false;
+                    //  receiptPrint
                     break;
                 case "0":
                     //sandwiches.clear();  // delete order
@@ -109,8 +109,6 @@ public class UserInterface {
         SandwichBuilder builder = new SandwichBuilder(scanner);
         Sandwich sandwich = builder.build();
         sandwiches.add(sandwich);
-
-
     }
     private  void addDrink(Scanner scanner){
         //drinks
@@ -130,7 +128,7 @@ public class UserInterface {
     private void showDrinks() {
         System.out.println("\nChoose your size:");
         System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#", "Small", "Medium", "Large");
+        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#","","Small", "Medium", "Large");
         System.out.println("------------------------------------");
         System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "", "", "$2.00", "$2,50", "$3.00");
         System.out.println("------------------------------------");
@@ -140,8 +138,18 @@ public class UserInterface {
         System.out.println("Would you like a chips? Yes/no");
         String answer3 = scanner.nextLine();
         boolean isChipsNeeded = false;
-        if(answer3.equalsIgnoreCase("Yes")){
+        if (answer3.equalsIgnoreCase("Yes")){
             isChipsNeeded=true;
+        }
+    }
+    private void checkedOut(Scanner scanner) {
+        System.out.println("Would you like to continue your order? (yes/no)");
+        String answer = scanner.nextLine().trim();
+
+        if (answer.equalsIgnoreCase("yes")) {
+        } else {
+            System.out.println("Printing your receipt...");
+
         }
     }
 
