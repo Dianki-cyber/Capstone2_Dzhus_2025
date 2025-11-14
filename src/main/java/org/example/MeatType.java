@@ -44,5 +44,15 @@ public enum MeatType {
             //default -> "NO MEAT";
         };
     }
+    public  static  double priceForSize(int size){
+        if(size==1) {
+            return priceSmall;
+        } else if (size==2){
+            return  priceMedium;
+        } else {
+            return  priceLarge;
+        }
+
+    }
 
 }

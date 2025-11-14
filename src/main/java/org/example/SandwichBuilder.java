@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -13,11 +14,21 @@ public class SandwichBuilder {
 
     public Sandwich build() {
 
-        System.out.println("Please choose your size: 1 - 4inch,2 - 8inch,3 - 12inch");
+        System.out.println();
+        System.out.println("╔══════════════════════════════════╗");
+        System.out.println("║      📏  CHOOSE YOUR SANDWICH SIZE ║");
+        System.out.println("╚══════════════════════════════════╝");
+        System.out.println();
+        System.out.println("  1️⃣  4 inch");
+        System.out.println("  2️⃣  8 inch");
+        System.out.println("  3️⃣  12 inch");
+        System.out.println("------------------------------------");
+        System.out.print("Enter your choice ➤ ");
+
         int size = scanner.nextInt();
         scanner.nextLine();
         SandwichSize sandwichSize = SandwichSize.sandwichSizeFromCode(size);
-
+        System.out.println(sandwichSize);
 
         System.out.println("Please choose your bread :");
         showBreadMenu();
@@ -25,6 +36,7 @@ public class SandwichBuilder {
         int breadChoice = scanner.nextInt();
         scanner.nextLine();
         BreadType breadType = BreadType.breadTypeFromCode(breadChoice);
+        System.out.println(breadType);
 
         // toppings
         showToppingsMenu();
@@ -61,12 +73,11 @@ public class SandwichBuilder {
                 procced = false;
             } else {
                 regularToppings.add(choice);
+
             }
         }
-        ArrayList<ToppingType> toppings = new ArrayList<>();
+        ArrayList<Topping> toppings = new ArrayList<>();
         for (Integer item : regularToppings) {
-            ToppingType toppingType = ToppingType.toppingTypeFromCode(item);
-            toppings.add(toppingType);
         }
 
         //sauces
@@ -86,9 +97,8 @@ public class SandwichBuilder {
         for (Integer item : regularSauces) {
             SauceType sauceType = SauceType.sauceTypeFromCode(item);
             sauceTypes.add(sauceType);
-
-
         }
+
         //sides
         showSides();
         boolean procced3 = true;
@@ -106,88 +116,101 @@ public class SandwichBuilder {
             System.out.printf("%s, ", item);
         }
 
-     
-        return new Sandwich(sandwichSize,breadType,meatType,isNeedextraMeat,cheeseType,isNeedExtraCheese,toppings,sauceTypes);
+        List<Topping> toppingsToAdd = new ArrayList<>();
+
+        for (Integer toppingCode : regularToppings) {
+            toppingsToAdd.add(Topping.toppingFromCode(toppingCode));
+        }
+
+        System.out.print("\nWould you like the sandwich toasted? Yes/No: ");
+        String toastedAnswer = scanner.nextLine().trim();
+        boolean toasted = toastedAnswer.equalsIgnoreCase("Yes");
+        return new Sandwich(sandwichSize, breadType, meatType, isNeedextraMeat, cheeseType, isNeedExtraCheese, toppingsToAdd, sauceTypes);
     }
 
-
-
-
     private void showBreadMenu() {
-        System.out.println("\nChoose your bread type:");
-        System.out.println("------------------------------------");
-        System.out.printf(" %-2s  %-10s  %-10s %-10s %-10s\n", "#", "Bread Type", "4\"","8\"","12\"");
-        System.out.println("------------------------------------");
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║              CHOOSE YOUR BREAD TYPE             ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s %-10s %-10s %-10s%n", "#", "Bread Type", "4\"", "8\"", "12\"");
+        System.out.println("--------------------------------------------------");
         BreadType.display();
-        System.out.println("------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     private void showToppingsMenu() {
-        System.out.println("\nChoose your toppings:");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#", "Topping", "4\"", "8\"", "12\"");
-        System.out.println("------------------------------------");
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║              CHOOSE YOUR TOPPINGS              ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s %-10s %-10s %-10s%n", "#", "Topping", "4\"", "8\"", "12\"");
+        System.out.println("--------------------------------------------------");
         MeatType.display();
-        System.out.println("------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     private void showExtraMeat() {
-        System.out.println("\nChoose extra meat:");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#", "Extra meat", "4\"", "8\"", "12\"");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "", "", "$0.50", "$1.00", "$1.50");
-        System.out.println("------------------------------------");
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║                EXTRA MEAT OPTIONS               ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s %-10s %-10s %-10s%n", "#", "Extra Meat", "4\"", "8\"", "12\"");
+        System.out.println("--------------------------------------------------");
+        System.out.printf(" %-3s %-15s %-10s %-10s %-10s%n", "", "", "$0.50", "$1.00", "$1.50");
+        System.out.println("--------------------------------------------------");
     }
 
     private void showCheeseMenu() {
-        System.out.println("\nChoose your cheese:");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#", "Cheese", "4\"", "8\"", "12\"");
-        System.out.println("------------------------------------");
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║                CHOOSE YOUR CHEESE               ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s %-10s %-10s %-10s%n", "#", "Cheese", "4\"", "8\"", "12\"");
+        System.out.println("--------------------------------------------------");
         CheeseType.display();
-        System.out.println("------------------------------------");
+        System.out.println("--------------------------------------------------");
     }
 
     private void showExtraCheese() {
-        System.out.println("\nChoose extra cheese:");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "#", "Extra cheese", "4\"", "8\"", "12\"");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s %-8s %-8s %-8s\n", "", "", "$0.30", "$0.60", "$0.90");
-        System.out.println("------------------------------------");
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║               EXTRA CHEESE OPTIONS              ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s %-10s %-10s %-10s%n", "#", "Extra Cheese", "4\"", "8\"", "12\"");
+        System.out.println("--------------------------------------------------");
+        System.out.printf(" %-3s %-15s %-10s %-10s %-10s%n", "", "", "$0.30", "$0.60", "$0.90");
+        System.out.println("--------------------------------------------------");
     }
 
     private void showRegularTopping() {
-        System.out.println("\nChoose your regular toppings:");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s\n", "#", "Topping");
-        System.out.println("------------------------------------");
-        ToppingType.display();
-        System.out.printf("%-3s \n",  " 0.Finish with regular toppings");
-        System.out.println("------------------------------------");
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║             CHOOSE YOUR REGULAR TOPPINGS        ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s%n", "#", "Topping");
+        System.out.println("--------------------------------------------------");
+        Topping.display();
+        System.out.println("--------------------------------------------------");
+        System.out.println("  0  Finish with regular toppings");
+        System.out.println("--------------------------------------------------");
     }
 
     private void showRegularSauces() {
-        System.out.println("\nChoose your regular sauces:");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s\n", "#", "Sauces");
-        System.out.println("------------------------------------");
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║                CHOOSE YOUR SAUCES               ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s%n", "#", "Sauces");
+        System.out.println("--------------------------------------------------");
         SauceType.display();
-        System.out.printf("%-3s %-15s\n", "0", "Finish with regular sauces");
-        System.out.println("------------------------------------");
+        System.out.println("--------------------------------------------------");
+        System.out.println("  0  Finish with regular sauces");
+        System.out.println("--------------------------------------------------");
     }
 
     private void showSides() {
-        System.out.println("\nChoose your sides :");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s\n", "#", "Sides");
-        System.out.println("------------------------------------");
-        System.out.printf("%-3s %-15s\n", "1.", "Au jus");
-        System.out.printf("%-3s %-15s\n", "2.", "Sauce");
-        System.out.printf("%-3s %-15s\n", "0.", "Finish with sides");
-
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║                 CHOOSE YOUR SIDES               ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
+        System.out.printf(" %-3s %-15s%n", "#", "Sides");
+        System.out.println("--------------------------------------------------");
+        System.out.printf(" %-3s %-15s%n", "1", "Au jus");
+        System.out.printf(" %-3s %-15s%n", "2", "Sauce");
+        System.out.printf(" %-3s %-15s%n", "0", "Finish with sides");
+        System.out.println("--------------------------------------------------");
     }
-
-
 }

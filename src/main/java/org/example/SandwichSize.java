@@ -20,7 +20,6 @@ public enum SandwichSize {
         }
         // 4. Handle no match (crucial for robustness)
         throw new IllegalArgumentException("Unknown status code provided: " + code);
-
     }
 
     public String getTitle() {
@@ -31,5 +30,8 @@ public enum SandwichSize {
             default -> "0 inch";
         };
 
+    }
+    int getCode (){
+        return  code;
     }
 }

@@ -1,36 +1,57 @@
 package org.example;
 
-public class Topping {
-    private ToppingType type;
-    private  MeatType meatType;
-    private double price;
-    private  boolean isPremium;
+public enum Topping {
+    MEAT(1),
+    CHEESE(2),
+    LETTUCE(3),
+   PEPPERS(4),
+   ONIONS(5),
+   TOMATOES(6),
+  JALAPENOS(7),
+   CUCUMBERS(8),
+    PICKLES(9),
+  GUACAMOLE(10),
+    MUSHROOMS(11);
 
-    public Topping( ToppingType type, double price) {
-        this.type = type ;
-        this.price = price;
+    private final int code;
+
+    Topping(int code) {
+        this.code = code;
     }
-    public ToppingType getType() {
-        return type;
+    public static Topping toppingFromCode(int code) {
+        // 1. Loop through all defined constants in the enum
+        for (Topping topping : Topping.values()) {
+            //2. Check the custom integer code
+            if (topping.code == code) {
+                // 3.} Return the matching constant
+                return topping;
+            }
+        }
+        // 4. Handle no match (crucial for robustness)
+        throw new IllegalArgumentException("Unknown status code provided: " + code);
     }
 
-    public void setType(ToppingType type) {
-        this.type = type;
+        static void display() {
+        for (Topping topping: Topping.values()) {
+            System.out.printf(" %-2d  %-15s \n",topping.code, topping.getTitle());
+        }
     }
 
-    public double getPrice() {
-        return price;
+    public String getTitle() {
+        return switch (this) {
+            case MEAT -> "MEAT";
+            case CHEESE -> "CHEESE";
+            case LETTUCE -> "LETTUCE";
+            case PEPPERS -> "PEPPERS";
+            case ONIONS -> "ONIONS";
+            case TOMATOES -> "TOMATOES";
+            case JALAPENOS -> "JALAPENOS";
+            case CUCUMBERS -> "CUCUMBERS";
+            case PICKLES -> "PICKLES";
+            case GUACAMOLE -> "GUACAMOLE";
+            case MUSHROOMS -> "MUSHROOMS";
+          //  default -> "NO TOPPING";
+        };
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "Topping{" +
-                "name='" + type.toString() + '\'' +
-                ", price=" + price +
-                '}';
-    }
 }

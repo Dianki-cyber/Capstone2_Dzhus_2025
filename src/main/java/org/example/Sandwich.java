@@ -5,29 +5,73 @@ import java.util.List;
 
 
 public class Sandwich {
-    private static SandwichSize size;
+    private  SandwichSize size;
     private  BreadType bread;
     private  MeatType toppingMeat;
-    private static boolean extraMeat;
+    private  boolean extraMeat;
     private  CheeseType toppingCheese;
-    private static boolean extraCheese;
-    private static List<SauceType> sauceTypeList;
-    private static List<Topping> toppings;
+    private boolean extraCheese;
+    private List<SauceType> sauceTypeList;
+    private  List<Topping> toppings = new ArrayList<>();
 
-    public Sandwich(SandwichSize size, BreadType bread, MeatType toppingMeat, boolean extraMeat, CheeseType toppingCheese, boolean extraCheese, List<SauceType> sauceTypeList, List<Topping> toppings) {
-        this.size = size;
-        this.bread = bread;
-        this.toppingMeat= toppingMeat;
-        this.extraMeat = extraMeat;
-        this.toppingCheese = toppingCheese;
-        this.extraCheese = extraCheese;
-        this.sauceTypeList = sauceTypeList;
+
+    public Sandwich(SandwichSize sandwichSize, BreadType breadType, MeatType meatType, boolean isNeedextraMeat, CheeseType cheeseType, boolean isNeedExtraCheese, List<Topping> toppings, List<SauceType> sauceTypeList) {
+        this.size = sandwichSize;
+        this.bread = breadType;
+        this.toppingMeat= meatType;
+        this.extraMeat = isNeedextraMeat;
+        this.toppingCheese = cheeseType;
+        this.extraCheese = isNeedExtraCheese;
         this.toppings = toppings;
+        this.sauceTypeList = sauceTypeList;
     }
 
-    public Sandwich(SandwichSize sandwichSize, BreadType breadType, MeatType meatType, boolean isNeedextraMeat, CheeseType cheeseType, boolean isNeedExtraCheese, ArrayList<ToppingType> toppings, List<SauceType> sauceTypeList) {
+    public BreadType getBread() {
+        return bread;
+    }
 
-        Sandwich.sauceTypeList = sauceTypeList;
+    public void setBread(BreadType bread) {
+        this.bread = bread;
+    }
+
+    public MeatType getToppingMeat() {
+        return toppingMeat;
+    }
+
+    public void setToppingMeat(MeatType toppingMeat) {
+        this.toppingMeat = toppingMeat;
+    }
+
+    public CheeseType getToppingCheese() {
+        return toppingCheese;
+    }
+
+    public void setToppingCheese(CheeseType toppingCheese) {
+        this.toppingCheese = toppingCheese;
+    }
+
+    public boolean isExtraMeat() {
+        return extraMeat;
+    }
+
+    public void setExtraMeat(boolean extraMeat) {
+        this.extraMeat = extraMeat;
+    }
+
+    public boolean isExtraCheese() {
+        return extraCheese;
+    }
+
+    public void setExtraCheese(boolean extraCheese) {
+        this.extraCheese = extraCheese;
+    }
+
+    public List<SauceType> getSauceTypeList() {
+        return sauceTypeList;
+    }
+
+    public void setSauceTypeList(List<SauceType> sauceTypeList) {
+        this.sauceTypeList = sauceTypeList;
     }
 
     public SandwichSize getSize() {
@@ -35,7 +79,7 @@ public class Sandwich {
     }
 
     public void setSize(SandwichSize size) {
-        Sandwich.size = size;
+        this.size= size;
     }
 
     public BreadType getBreadType() {
@@ -52,11 +96,11 @@ public class Sandwich {
     }
 
     public void setToppings(List<Topping> toppings) {
-        Sandwich.toppings = toppings;
+        this.toppings = toppings;
     }
 
     // Calculate price
-    public static double getPrice() {
+    public  double getPrice() {
         double total = 0.0;
 
         // Add base price depending on size
@@ -82,15 +126,28 @@ public class Sandwich {
 
         return total;
     }
+    private void addTopping(Topping topping){
+        toppings.add(topping);
+    }
 
     @Override
     public String toString() {
-        return "Sandwich{" +
-                "bread=" + bread +
-                ", toppingMeat=" + toppingMeat +
-                ", toppingCheese=" + toppingCheese +
-                '}';
-    }
-}
+        String sandwichString = "\n=== Sandwich ===\n" +
+                "Bread: " + bread + "\n" +
+                "Meat: " + toppingMeat + "\n" +
+                "Cheese: " + toppingCheese + "\n";
+
+        sandwichString += "Toppings:\n";
+        for (Topping topping : toppings) {
+            sandwichString += "  - " + topping.getTitle() + "\n";
+        }
+
+        sandwichString += "Sauces:\n";
+        for (SauceType sauceType : sauceTypeList) {
+            sandwichString += "  - " + sauceType.getTitle() + "\n";
+        }
+
+        return sandwichString;
+    }}
 
 
